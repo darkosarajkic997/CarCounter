@@ -78,7 +78,7 @@ fps = vidFile.get(cv2.CAP_PROP_FPS)
 
 ret, frame = vidFile.read()
 h, w = frame.shape[:2]
-det_zone=(100,330,600,430)
+det_zone = (100, 330, 600, 430)
 print(det_zone)
 
 ct = CentroidTracker(detection_zone=det_zone)
@@ -91,17 +91,17 @@ while ret:
 
     cars = ct.update(squares)
 
-    for key,car in cars.items():
+    for key, car in cars.items():
         start_point = (car[0][0], car[0][1])
         end_point = (car[0][0]+car[0][2], car[0][1]+car[0][3])
-        patch = cv2.rectangle(patch, start_point, end_point,color=(100, 45, 255), thickness=2)
-        patch=cv2.putText(patch,f'carId:{key}',start_point,fontFace=4,fontScale = 0.6,color=(0, 0, 0),thickness = 1)
+        patch = cv2.rectangle(patch, start_point, end_point, color=(100, 45, 255), thickness=2)
+        patch = cv2.putText(patch, f'carId:{key}', start_point, fontFace=4, fontScale=0.6, color=(0, 0, 0), thickness=1)
 
-    patch=cv2.putText(patch,f'Car passed:{ct.count}',(20,20),fontFace=4,fontScale = 0.6,color=(0, 0, 0),thickness = 1)
-    patch = cv2.rectangle(patch, (det_zone[0],det_zone[1]), (det_zone[2],det_zone[3]),color=(78, 252, 3), thickness=1)
+    patch = cv2.putText(patch, f'Car passed:{ct.count}', (20, 20), fontFace=4, fontScale=0.6, color=(0, 0, 0), thickness=1)
+    patch = cv2.rectangle(patch, (det_zone[0], det_zone[1]), (det_zone[2], det_zone[3]), color=(78, 252, 3), thickness=1)
     cv2.imshow("frameWindow", patch)
     #cv2.imshow("fgmask", filtered_img)
-   
+
     cv2.waitKey(int(1000/fps))
     ret, frame = vidFile.read()
     if cv2.waitKey(20) & 0xFF == ord('q'):
